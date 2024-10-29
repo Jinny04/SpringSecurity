@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!-- 설명. 'USER' 권한을 가진 사용자만이 아래 div 태그를 볼 수 있음. -->
+    <div sec:authorize="hasAnyAuthority('USER')">
+        <p>Welcome, USER!</p>
+    </div>
+</body>
+</html>

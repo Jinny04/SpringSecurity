@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.3'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.ohgiraffers'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    /* 설명. Spring Security v6.3
+     *  아래는 Spring Starters에서 Spring Security를 선택했을 때 추가되는 의존성이다.
+     *  아래 의존성이 추가되면 Spring Security 관련 설정이 자동으로 동작한다.
+     *  이 때, 다음과 같은 현상들을 관찰할 수 있다:
+     *  1) 내장 Tomcat을 실행했을 때, 터미널에 시큐리티 관련 로그가 추가로 출력됨.
+     *  2) root context(/)로 접속했을 때, Spring Security가 기본으로 제공하는 로그인 페이지(/login)가 보임.
+     *    - org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter
+     *    - org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint
+     *  =======================================================================================================
+     *  참고로 Spring Boot 3.0버전과 Spring Security 6.0 버전이 세트다.
+     *  따라서 Spring Boot 3.3.3 버전을 선택하면 Starters는 Spring Security 6.3.3 버전을 사용하게 된다.
+     * */
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
